@@ -13,8 +13,8 @@ import TarjetaPersonaje from './tarjeta-personaje.componente';
  * 
  * Deberás agregar las funciones necesarias para mostrar y paginar los personajes
  * 
- * 
- * @returns un TSX element 
+ * @param {Object[]} listaPersonajes props
+ * @returns {React.ReactElement} un JSX element 
  */
  const GrillaPersonajes: FC<{ listaPersonajes: Personaje[] }> = ({ listaPersonajes} ) => {
 

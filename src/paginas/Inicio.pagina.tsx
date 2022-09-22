@@ -12,7 +12,7 @@ import { useSelector } from "../store/store";
  * Uso: 
  * ``` <PaginaInicio /> ```
  * 
- * @returns la pagina de inicio
+ * @returns {React.ReactElement} la pagina de inicio
  */
 const PaginaInicio: FC = () => {
 

@@ -25,8 +25,8 @@ const initialState: PersonajesState = {
  * Funciones reductora de los personajes
  * 
  * @param {State} state 
- * @param {} action 
- * @returns {State}
+ * @param {DataStore.Reducer<PersonajesState, PersonajesAction>} action 
+ * @returns {State} un estado
  */
 
 const personajesReducer: Reducer<PersonajesState, PersonajesAction> =

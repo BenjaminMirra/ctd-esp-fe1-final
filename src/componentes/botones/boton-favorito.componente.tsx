@@ -3,11 +3,9 @@ import Personaje from '../../types/characters.types';
 import { isAddFavorito, isRemoveFavorito } from '../../actions/personajes.actions';
 import { useDispatch } from 'react-redux';
 
-
 interface Props {
     esFavorito: boolean;
-    personaje: Personaje | undefined;
-    favoritos: Personaje[] 
+    personaje: Personaje;
 }
 interface OnClick {
     onClick: (esFavorito: boolean) => void;
@@ -19,16 +17,18 @@ interface OnClick {
  * 
  * Deberás tipar las propiedades si usas este componente
  * 
- * 
- * @returns un JSX element 
+ * @param {Function} onClick
+ * @param {boolean} esFavorito
+ * @param {Personaje} personaje
+ * @returns {React.ReactELement} un JSX element 
  */
-const BotonFavorito = ({favoritos, esFavorito, onClick, personaje }: Props & OnClick) => {
+const BotonFavorito = ({esFavorito, onClick, personaje }: Props & OnClick) => {
 
     const dispatch = useDispatch()
 
     const handleFavorito = () => {
         if(esFavorito === false){
-            dispatch(isAddFavorito(personaje))
+            dispatch(isAddFavorito(personaje)) 
             onClick(!esFavorito);            
         }else{
             dispatch(isRemoveFavorito(personaje))

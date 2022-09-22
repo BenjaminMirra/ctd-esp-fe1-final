@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector as useReduxSelector } from 'react-redux';
+import {  useDispatch} from 'react-redux';
 import { changePageThunk } from '../../actions/personajes.actions';
-import { IRootState } from '../../store/store';
+import { useSelector} from '../../store/store';
 import './paginacion.css';
 
 /**
@@ -13,8 +13,6 @@ import './paginacion.css';
  * @returns {React.ReactElement} JSX element
  */
 const Paginacion: FC = () => {
-
-    const useSelector: TypedUseSelectorHook<IRootState> = useReduxSelector;
     const dispatch = useDispatch()
 
     const pageInfo = useSelector((estado) =>
