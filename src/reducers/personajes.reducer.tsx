@@ -9,7 +9,7 @@ export interface PersonajesState {
     personajes: Personaje[],
     pageInfo: PageInfo;
     error: string | null,
-    favoritos: Personaje[]
+    favoritos: Personaje[],
 }
 
 const initialState: PersonajesState = {
@@ -18,7 +18,7 @@ const initialState: PersonajesState = {
     personajes: [],
     pageInfo: { count: 0, pages: 0, next: "0", prev: "1" },
     error: null,
-    favoritos: []
+    favoritos: [],
 };
 
 /**
@@ -32,12 +32,17 @@ const initialState: PersonajesState = {
 const personajesReducer: Reducer<PersonajesState, PersonajesAction> =
     (state = initialState, action): PersonajesState => {
         switch (action.type) {
+            case "CHANGE_FAVORITO":
+                return{
+                    ...state,
+                    personajes: [...state.personajes, action.payload ]
+                }
             case "ADD_FAVORITO":
                 return {
                     ...state,
                     favoritos:
-                    // [action.payload, ...state.favoritos.filter(e => e.id !== action.payload.id)] 
-                    [...state.favoritos, action.payload]
+                    [action.payload, ...state.favoritos.filter(e => e.id !== action.payload.id)] 
+                    //[...state.favoritos, action.payload]
                 }
             case "REMOVE_FAVORITO":
                 return {

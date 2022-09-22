@@ -1,4 +1,5 @@
 import { Action, ActionCreator, ThunkAction } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 import { buscarPersonajesAPI, cambiarPaginaApi } from "../services/personaje.service";
 import { IRootState } from "../store/store";
 import Personaje from "../types/characters.types";
@@ -32,10 +33,23 @@ export interface RemoveFavorito extends Action {
     payload: Personaje
 }
 
+export interface ChangeFavorito extends Action {
+    type: "CHANGE_FAVORITO",
+    payload: Personaje
+}
+
 export interface getPersonajesAccion extends Action {
     type: "GET_PERSONAJES";
     payload: { busqueda: string }
 }
+
+export const isChangeFavorito: ActionCreator<ChangeFavorito> = (personaje: Personaje) => {
+    return {
+        type: "CHANGE_FAVORITO",
+        payload: personaje
+    }
+}
+
 
 export const isFetchingPersonajes: ActionCreator<IsFetchingPersonajes> = (name: string) => {
     return {
@@ -48,7 +62,16 @@ export const isSuccessPersonajes: ActionCreator<IsSuccessPersonajes> = (personaj
     return {
         type: "IS_SUCCESS_PERSONAJES",
         payload: {
-            personajes: personajes,
+            personajes: personajes
+            // .map((e)=>{
+            //     return ({
+            //         name: e.name,
+            //         id: e.id,
+            //         status: e.status,
+            //         image: e.image, 
+            //     })
+            // })
+            ,
             pageInfo: pageInfo
         }
     }
@@ -110,7 +133,6 @@ export const searchCharactersThunks = (name: string): SearchCharactersThunks => 
             dispatch(isErrorPersonajes(error))
         }
     }
-
 }
 
 export const changePageThunk = (url: string): SearchCharactersThunks => {
@@ -131,4 +153,5 @@ export type PersonajesAction =
     | ReturnType<typeof isAddFavorito>
     | ReturnType<typeof isRemoveFavorito>
     | ReturnType<typeof getPersonajes>
-    | ReturnType<typeof removeTodoFavoritos>;
+    | ReturnType<typeof removeTodoFavoritos>
+    | ReturnType<typeof isChangeFavorito>

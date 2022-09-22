@@ -7,8 +7,8 @@ import './tarjeta-personaje.css';
 interface ITarjeta {
     image: string,
     nombre: string,
-    personaje: Personaje
-    favoritos: Personaje[]
+    personaje: Personaje,
+    favoritos: Personaje[],
 }
 
 /**
@@ -21,22 +21,28 @@ interface ITarjeta {
  * @param {Object[]} favoritos
  * @returns {React.ReactELement} un JSX element 
  */
-const TarjetaPersonaje = ({favoritos, image, nombre, personaje} : ITarjeta) => {
+const TarjetaPersonaje = ({ favoritos, image, nombre, personaje }: ITarjeta) => {
 
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
-    useEffect(()=>{
-        if(favoritos.includes(personaje)){
+    useEffect(() => {
+        if (favoritos.includes(personaje)) {
             setIsFavorite(true);
         }
-    },[favoritos,personaje])    
+    }, [favoritos, personaje])
 
+    let esFavoritoElPJ = false;
+    if (favoritos.includes(personaje)) {
+        esFavoritoElPJ = true
+    } else {
+        esFavoritoElPJ = false
+    }
 
     return <div className="tarjeta-personaje">
-        <img src={image} alt={nombre}/>
+        <img src={image} alt={nombre} />
         <div className="tarjeta-personaje-body">
             <span>{nombre}</span>
-            <BotonFavorito personaje={personaje} esFavorito={isFavorite} onClick={setIsFavorite}/>
+            <BotonFavorito esFavoritoElPj={esFavoritoElPJ} personaje={personaje} esFavorito={isFavorite} onClick={setIsFavorite} />
         </div>
     </div>
 

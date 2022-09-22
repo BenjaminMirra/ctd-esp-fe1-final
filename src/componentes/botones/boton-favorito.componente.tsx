@@ -1,13 +1,14 @@
 import './boton-favorito.css';
 import Personaje from '../../types/characters.types';
-import { isAddFavorito, isRemoveFavorito } from '../../actions/personajes.actions';
+import { isAddFavorito, isChangeFavorito, isRemoveFavorito } from '../../actions/personajes.actions';
 import { useDispatch } from 'react-redux';
 
 interface Props {
     esFavorito: boolean;
     personaje: Personaje;
+    esFavoritoElPj: boolean
 }
-interface OnClick {
+interface onClick {
     onClick: (esFavorito: boolean) => void;
 }
 
@@ -22,13 +23,14 @@ interface OnClick {
  * @param {Personaje} personaje
  * @returns {React.ReactELement} un JSX element 
  */
-const BotonFavorito = ({esFavorito, onClick, personaje }: Props & OnClick) => {
+const BotonFavorito = ({esFavorito, onClick, personaje, esFavoritoElPj }: Props & onClick) => {
 
     const dispatch = useDispatch()
 
     const handleFavorito = () => {
         if(esFavorito === false){
             dispatch(isAddFavorito(personaje)) 
+            dispatch(isChangeFavorito(personaje))
             onClick(!esFavorito);            
         }else{
             dispatch(isRemoveFavorito(personaje))
@@ -36,7 +38,7 @@ const BotonFavorito = ({esFavorito, onClick, personaje }: Props & OnClick) => {
         }
     }
 
-    const src = esFavorito === true ? "/imagenes/star-filled.png" : "/imagenes/star.png"
+    const src = esFavoritoElPj === true ? "/imagenes/star-filled.png" : "/imagenes/star.png"
 
     return <div onClick={() => handleFavorito()} className="boton-favorito">
         <img src={src} alt={"favorito"} />

@@ -3,6 +3,7 @@ interface Personaje {
     name: string,
     status: string,
     image: string,
+    favoritoPersonaje: boolean
 }
 
 export default Personaje;
