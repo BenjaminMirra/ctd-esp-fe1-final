@@ -22,6 +22,21 @@ export interface IsErrorPersonajes extends Action {
     payload: { error: string }
 }
 
+export interface AddFavorito extends Action {
+    type: "ADD_FAVORITO",
+    payload: Personaje
+}
+
+export interface RemoveFavorito extends Action {
+    type: "REMOVE_FAVORITO",
+    payload: Personaje
+}
+
+export interface getPersonajesAccion extends Action {
+    type: "GET_PERSONAJES";
+    payload: {busqueda: string}
+}
+
 export const isFetchingPersonajes: ActionCreator<IsFetchingPersonajes> = (name: string) => {
     return {
         type: "IS_FETCHING_PERSONAJES",
@@ -46,21 +61,44 @@ export const isErrorPersonajes: ActionCreator<IsErrorPersonajes> = (error: strin
     }
 }
 
+export const getPersonajes: ActionCreator<getPersonajesAccion> = (name: string) => {
+    return {
+        type: "GET_PERSONAJES",
+        payload: {
+            busqueda: name
+        }
+    };
+};
+
+export const isRemoveFavorito: ActionCreator<RemoveFavorito> = (personaje: Personaje) => {
+    return {
+        type: "REMOVE_FAVORITO",
+        payload: personaje
+    }
+}
+
+export const isAddFavorito: ActionCreator<AddFavorito> = (personaje: Personaje) => {
+    return {
+        type: "ADD_FAVORITO",
+        payload: personaje
+    }
+}
+
 export interface SearchCharactersThunks extends ThunkAction<void, IRootState, unknown, PersonajesAction> {
 }
 
 export const searchCharactersThunks = (name: string): SearchCharactersThunks => {
     return async (dispatch, getState) => {
+        dispatch(getPersonajes(name))
         try {
             dispatch(isFetchingPersonajes(name))
             const response = await buscarPersonajesAPI(name);
 
-            const [personajes, pageInfo] = response
-            dispatch(isSuccessPersonajes(personajes, pageInfo))
+            const [personajes, info] = response
+            dispatch(isSuccessPersonajes(personajes, info))
         } catch (error) {
             dispatch(isErrorPersonajes(error))
         }
-
     }
 
 }
@@ -79,4 +117,7 @@ export const changePageThunk = (url: string): SearchCharactersThunks => {
 export type PersonajesAction =
     | ReturnType<typeof isErrorPersonajes>
     | ReturnType<typeof isFetchingPersonajes>
-    | ReturnType<typeof isSuccessPersonajes>;
+    | ReturnType<typeof isSuccessPersonajes>
+    | ReturnType<typeof isAddFavorito>
+    | ReturnType<typeof isRemoveFavorito>
+    | ReturnType<typeof getPersonajes>;

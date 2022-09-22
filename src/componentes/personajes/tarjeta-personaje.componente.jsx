@@ -9,13 +9,14 @@ import './tarjeta-personaje.css';
  * 
  * @returns un JSX element 
  */
-const TarjetaPersonaje = ({id,image, nombre}) => {
+const TarjetaPersonaje = ({image, nombre}) => {
 
-    return <div id={id} className="tarjeta-personaje">
+
+    return <div className="tarjeta-personaje">
         <img src={image} alt={nombre}/>
         <div className="tarjeta-personaje-body">
             <span>{nombre}</span>
-            <BotonFavorito esFavorito={false} />
+            <BotonFavorito/>
         </div>
     </div>
 }

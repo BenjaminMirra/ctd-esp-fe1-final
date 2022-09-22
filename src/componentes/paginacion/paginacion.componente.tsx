@@ -10,7 +10,7 @@ import './paginacion.css';
  * Deberás agregar las propiedades necesarias para que funcione correctamente
  * 
  * 
- * @returns un JSX element 
+ * @returns {React.ReactElement} JSX element
  */
 const Paginacion : FC = () => {
 
@@ -27,12 +27,12 @@ const Paginacion : FC = () => {
           };
         
           const paginaPosterior = () => {
-            dispatch(changePageThunk(next));
+              dispatch(changePageThunk(next));
           };
 
     return <div className="paginacion">
         <button onClick={paginaAnterior} disabled={prev === null ? true : false} className={"primary"}>Anterior</button>
-        <button onClick={paginaPosterior} disabled={next == null ? true : false} className={"primary"}>Siguiente</button>
+        <button onClick={paginaPosterior} disabled={next === null ? true : false} className={"primary"}>Siguiente</button>
     </div>
 }
 

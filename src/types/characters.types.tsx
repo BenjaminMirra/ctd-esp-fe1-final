@@ -1,8 +1,13 @@
-interface Character {
+interface Personaje {
     id: number,
     name: string,
     status: string,
     image: string,
 }
 
-export default Character;
+export default Personaje;
+
+export interface botonFav{
+    onClick: Function,
+    esFavorito: boolean
+}
