@@ -1,7 +1,7 @@
 interface PageInfo {
     count: number,
     pages: number,
-    next: string,
+    next: string ,
     prev: string
 }
 

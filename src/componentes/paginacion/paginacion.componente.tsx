@@ -12,28 +12,30 @@ import './paginacion.css';
  * 
  * @returns {React.ReactElement} JSX element
  */
-const Paginacion : FC = () => {
+const Paginacion: FC = () => {
 
-    const useSelector : TypedUseSelectorHook<IRootState> = useReduxSelector;
+    const useSelector: TypedUseSelectorHook<IRootState> = useReduxSelector;
     const dispatch = useDispatch()
 
-    const pageInfo = useSelector((estado) => 
+    const pageInfo = useSelector((estado) =>
         estado.personajes.pageInfo);
 
-        const { next, prev } = pageInfo;
+    const { next, prev } = pageInfo;
 
-        const paginaAnterior = () => {
-            dispatch(changePageThunk(prev));
-          };
-        
-          const paginaPosterior = () => {
-              dispatch(changePageThunk(next));
-          };
+    const paginaAnterior = () => {
+        dispatch(changePageThunk(prev));
+    };
 
-    return <div className="paginacion">
+    const paginaPosterior = () => {
+        dispatch(changePageThunk(next));
+    };
+
+    return (
+    <div className="paginacion">
         <button onClick={paginaAnterior} disabled={prev === null ? true : false} className={"primary"}>Anterior</button>
         <button onClick={paginaPosterior} disabled={next === null ? true : false} className={"primary"}>Siguiente</button>
     </div>
+    )
 }
 
 export default Paginacion;

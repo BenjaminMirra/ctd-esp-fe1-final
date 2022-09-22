@@ -6,8 +6,3 @@ interface Personaje {
 }
 
 export default Personaje;
-
-export interface botonFav{
-    onClick: Function,
-    esFavorito: boolean
-}

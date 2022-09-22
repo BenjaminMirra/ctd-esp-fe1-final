@@ -1,11 +1,10 @@
 import { FC, useEffect } from 'react';
 import {
-    TypedUseSelectorHook,
     useDispatch,
-    useSelector as useReduxSelector,
-  } from "react-redux";
+} from "react-redux";
 import { searchCharactersThunks } from '../../actions/personajes.actions';
-import { IRootState, useSelector } from '../../store/store';
+import { useSelector } from '../../store/store';
+import Personaje from '../../types/characters.types';
 import './grilla-personajes.css';
 import TarjetaPersonaje from './tarjeta-personaje.componente';
 
@@ -17,15 +16,15 @@ import TarjetaPersonaje from './tarjeta-personaje.componente';
  * 
  * @returns un TSX element 
  */
-const GrillaPersonajes: FC  = () => {
+ const GrillaPersonajes: FC<{ listaPersonajes: Personaje[] }> = ({ listaPersonajes} ) => {
 
-    const useSelector: TypedUseSelectorHook<IRootState> = useReduxSelector;
-    const { status, personajes } = useSelector((state) => state.personajes);
+    // const useSelector: TypedUseSelectorHook<IRootState> = useReduxSelector;
+    const { status, favoritos } = useSelector((state) => state.personajes);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(searchCharactersThunks(""));
-      }, [dispatch]);
+    }, [dispatch]);
 
     if (status === "idle") return (
         <div>Haz una búsqueda para ver los personajes...</div>
@@ -36,19 +35,18 @@ const GrillaPersonajes: FC  = () => {
     )
 
     if (status === "error") return (
-        <div></div>
+        <div>Hubo un error</div>
     )
 
-    if (!personajes || personajes.length === 0) return <div>No se encontraron personajes</div>
+    if (!listaPersonajes || listaPersonajes.length === 0) return <div>No se encontraron personajes</div>
 
     return <div className="grilla-personajes">
-        {personajes.map((personaje) => {
-            return <div id={`${personaje.id}`}>
-                <TarjetaPersonaje nombre={personaje.name} image={personaje.image} />
-                </div>
+        {listaPersonajes.map((e) => {
+            return <div id={`${e.id}`}>
+                <TarjetaPersonaje favoritos={favoritos} personaje={e} nombre={e.name} image={e.image} />
+            </div>
         })}
     </div>
-
 }
 
 export default GrillaPersonajes;

@@ -9,14 +9,16 @@ export interface PersonajesState {
     personajes: Personaje[],
     pageInfo: PageInfo;
     error: string | null,
+    favoritos: Personaje[]
 }
 
 const initialState: PersonajesState = {
     busqueda: '',
     status: "idle",
     personajes: [],
-    pageInfo: { count: 0, pages: 0, next: "", prev: "" },
+    pageInfo: { count: 0, pages: 0, next: "0", prev: "1" },
     error: null,
+    favoritos: []
 };
 
 /**
@@ -30,16 +32,18 @@ const initialState: PersonajesState = {
 const personajesReducer: Reducer<PersonajesState, PersonajesAction> =
     (state = initialState, action): PersonajesState => {
         switch (action.type) {
-            // case "ADD_FAVORITO":
-            //     return {
-            //         ...state,
-            //         favorites: [action.payload, ...state.favorites.filter(character => character.id !== action.payload.id)]
-            //     }
-            // case "REMOVE_FAVORITO":
-            //     return {
-            //         ...state,
-            //         favorites: state.favorites.filter(character => character.id !== action.payload.id)
-            //     }
+            case "ADD_FAVORITO":
+                return {
+                    ...state,
+                    favoritos:
+                    // [action.payload, ...state.favoritos.filter(e => e.id !== action.payload.id)] 
+                    [...state.favoritos, action.payload]
+                }
+            case "REMOVE_FAVORITO":
+                return {
+                    ...state,
+                    favoritos: state.favoritos.filter((personaje) => personaje.id !== action.payload.id)
+                }
             case "IS_ERROR_PERSONAJES":
                 return {
                     ...state,
@@ -62,6 +66,11 @@ const personajesReducer: Reducer<PersonajesState, PersonajesAction> =
                     personajes: action.payload.personajes,
                     pageInfo: action.payload.pageInfo,
                     error: null
+                }
+            case "REMOVE_TODO_FAVORITOS":
+                return {
+                    ...state,
+                    favoritos: []
                 }
             default:
                 return { ...state };

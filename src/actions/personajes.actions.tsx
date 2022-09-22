@@ -34,7 +34,7 @@ export interface RemoveFavorito extends Action {
 
 export interface getPersonajesAccion extends Action {
     type: "GET_PERSONAJES";
-    payload: {busqueda: string}
+    payload: { busqueda: string }
 }
 
 export const isFetchingPersonajes: ActionCreator<IsFetchingPersonajes> = (name: string) => {
@@ -84,6 +84,16 @@ export const isAddFavorito: ActionCreator<AddFavorito> = (personaje: Personaje) 
     }
 }
 
+export const removeTodoFavoritos: ActionCreator<RemoveTodoFavoritosAction> = () => {
+    return {
+        type: 'REMOVE_TODO_FAVORITOS',
+    }
+}
+
+export interface RemoveTodoFavoritosAction extends Action {
+    type: 'REMOVE_TODO_FAVORITOS',
+}
+
 export interface SearchCharactersThunks extends ThunkAction<void, IRootState, unknown, PersonajesAction> {
 }
 
@@ -120,4 +130,5 @@ export type PersonajesAction =
     | ReturnType<typeof isSuccessPersonajes>
     | ReturnType<typeof isAddFavorito>
     | ReturnType<typeof isRemoveFavorito>
-    | ReturnType<typeof getPersonajes>;
+    | ReturnType<typeof getPersonajes>
+    | ReturnType<typeof removeTodoFavoritos>;
